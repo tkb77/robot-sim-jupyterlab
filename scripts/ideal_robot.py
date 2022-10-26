@@ -29,7 +29,7 @@ class World:
         elems = []
         
         if self.debug:
-            for i in range(1000): self.one_step(i,elems,ax)
+            for i in range(int(self.time_span/self.time_interval)): self.one_step(i,elems,ax)
         else:
             self.ani = anm.FuncAnimation(fig, self.one_step, fargs=(elems, ax),
                                      frames=int(self.time_span/self.time_interval)+1, interval=int(self.time_interval*1000), repeat=False)
@@ -42,10 +42,11 @@ class World:
     
     def one_step(self, i, elems, ax):
         while elems: elems.pop().remove()
-        elems.append(ax.text(-4.4,4.5,"t="+str(i),fontsize=10))
+        time_str = "t = %.2f[s]" % (self.time_interval*i)
+        elems.append(ax.text(-4.4, 4.5, time_str, fontsize=10))
         for obj in self.objects:
             obj.draw(ax,elems)
-            if hasattr(obj, "one_step"): obj.one_step(1.0)
+            if hasattr(obj, "one_step"): obj.one_step(self.time_interval)
             
 class Agent:
     def __init__(self, nu, omega):
