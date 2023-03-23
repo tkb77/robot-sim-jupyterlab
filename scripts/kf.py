@@ -108,5 +108,3 @@ def trial():
     right = EstimationAgent(time_interval, 0.1, -3.0/180*math.pi, kf)
     r = Robot(initial_pose, sensor=Camera(m), agent=right, color="red")
     world.append(r)
-
-world.draw()
