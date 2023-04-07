@@ -39,7 +39,7 @@ def matQ(distance_dev, direction_dev): #観測の共分散行列
 class KalmanFilter: ###kalmanfilter1
     def __init__(self, envmap, init_pose, motion_noise_stds={"nn":0.19, "no":0.001, "on":0.13, "oo":0.2},\
                 distance_dev_rate=0.14, direction_dev=0.05):
-        self.belief = multivariate_normal(mean=np.array([0.0, 0.0, 0.0]), cov=np.diag([1e-10, 1e-10, 1e-10]))
+        self.belief = multivariate_normal(mean=init_pose, cov=np.diag([1e-10, 1e-10, 1e-10]))
         self.motion_noise_stds = motion_noise_stds
         self.pose = self.belief.mean
         self.map = envmap  #以下3行追加（Mclと同じ）
